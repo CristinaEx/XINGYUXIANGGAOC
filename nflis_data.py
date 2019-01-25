@@ -27,4 +27,4 @@ class NflisData:
 
 if __name__ == '__main__':
     nflis_data = NflisData()
-    print(nflis_data.nflis_data_message_book[1])
+    print(type(nflis_data.nflis_data[1][0]))
