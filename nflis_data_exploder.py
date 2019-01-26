@@ -37,4 +37,5 @@ class ExplodedData:
 
 if __name__ == '__main__':
     data = ExplodedData()
-    print(data.data[0][0])
+    print(len(data.data))
+    print(len(data.data[0]))
