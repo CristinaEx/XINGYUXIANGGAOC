@@ -1,4 +1,5 @@
 from nflis_data import *
+from nflis_data_exploder import *
 import matplotlib.pyplot as plt
 import numpy
 import os
@@ -72,7 +73,34 @@ def eachStateLine(save_path):
     # plt.show()
     plt.savefig(save_path + '\\' + 'TotalDrugReportsState.png')
     plt.close()
-    
+
+def eachStateCountyLine(save_path):
+    """
+    各county在各州之间的折线图
+    只选用5年都有数据的county
+    """
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    data = ExplodedData()
+    combines = list(data.combine_index_book.keys())
+    for state in data.state_index:
+        plt.title(state)
+        txt = []
+        lines = []
+        for combine_index in range(len(combines)):
+            if combines[combine_index].split(' ')[0] == state:
+                txt.append(combines[combine_index].split(' ')[1])
+                data_list = []
+                for j in range(8):
+                    data_list.append(data.data[j][combine_index][1])
+                line, = plt.plot(data_list,color = colors[combine_index%11])  
+                lines.append(line)
+        plt.legend(lines, txt, loc = 'upper right')
+        plt.xlabel('year')
+        plt.ylabel('num')
+        # plt.show()
+        plt.savefig(save_path + '\\' + state + '.png')
+        plt.close()
 
 if __name__ == '__main__':
-    eachStateLine('eachStateLine')
+    eachStateCountyLine('eachStateCountyLine')

@@ -28,7 +28,7 @@ class ExplodedData:
                         useful = False
                         break
                 if useful:
-                    self.combine_index_book[state + county] = len(self.combine_index_book.keys())
+                    self.combine_index_book[state + ' ' + county] = len(self.combine_index_book.keys())
                     for year in range(2010,2018):
                         add_data = [0] * 5
                         add_data[nflis_data.state_index_book[2010][state]] = exp_data[year-2010][nflis_data.state_index_book[2010][state]]
