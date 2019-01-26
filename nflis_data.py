@@ -26,20 +26,22 @@ class NflisData:
                 self.state_index_book[now_data[0]] = dict()
                 self.county_index_book[now_data[0]] = dict()
                 self.data.append([])
-            if not now_data[3] in self.state_index_book[now_data[0]].keys():
-                self.state_index_book[now_data[0]][now_data[3]] = len(self.state_index_book[now_data[0]].keys())
-                self.county_index_book[now_data[0]][now_data[3]] = dict()
+            if not now_data[1] in self.state_index_book[now_data[0]].keys():
+                self.state_index_book[now_data[0]][now_data[1]] = len(self.state_index_book[now_data[0]].keys())
+                self.county_index_book[now_data[0]][now_data[1]] = dict()
                 self.data[self.year_index_book[now_data[0]]].append([])
-            if not now_data[4] in self.county_index_book[now_data[0]][now_data[3]].keys():
-                self.county_index_book[now_data[0]][now_data[3]][now_data[4]] = len(self.county_index_book[now_data[0]][now_data[3]].keys())
-                self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[3]]].append([])
-            if len(self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[3]]][self.county_index_book[now_data[0]][now_data[3]][now_data[4]]]) == 0:
-                self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[3]]][self.county_index_book[now_data[0]][now_data[3]][now_data[4]]] = list(now_data[7:])
+            if not now_data[2] in self.county_index_book[now_data[0]][now_data[1]].keys():
+                self.county_index_book[now_data[0]][now_data[1]][now_data[2]] = len(self.county_index_book[now_data[0]][now_data[1]].keys())
+                self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[1]]].append([])
+            if len(self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[1]]][self.county_index_book[now_data[0]][now_data[1]][now_data[2]]]) == 0:
+                self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[1]]][self.county_index_book[now_data[0]][now_data[1]][now_data[2]]] = list(now_data[7:])
             else:
-                self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[3]]][self.county_index_book[now_data[0]][now_data[3]][now_data[4]]][0] = self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[3]]][self.county_index_book[now_data[0]][now_data[3]][now_data[4]]][0] + now_data[7]
+                self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[1]]][self.county_index_book[now_data[0]][now_data[1]][now_data[2]]][0] = self.data[self.year_index_book[now_data[0]]][self.state_index_book[now_data[0]][now_data[1]]][self.county_index_book[now_data[0]][now_data[1]][now_data[2]]][0] + now_data[7]
 
 
 
 if __name__ == '__main__':
     nflis_data = NflisData()
-    print(nflis_data.data[1][3][3])
+    for i in range(5):
+        for j in range(8):
+            print(nflis_data.data[j][i][0][2])
