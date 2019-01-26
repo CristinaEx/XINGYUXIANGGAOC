@@ -1,5 +1,4 @@
 from data_reader import *
-import re
 
 class NflisData:
     """
@@ -14,7 +13,6 @@ class NflisData:
         self.year_index_book = dict()
         self.state_index_book = dict()
         self.county_index_book = dict()
-        self.combine_message_book = dict()
         data = readData()
         # 首先处理NFLIS_Data
         NFLIS_Data = data['NFLIS_Data']
