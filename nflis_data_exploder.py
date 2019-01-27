@@ -37,5 +37,4 @@ class ExplodedData:
 
 if __name__ == '__main__':
     data = ExplodedData()
-    print(len(data.data))
-    print(len(data.data[0]))
+    print(data.combine_index_book)
