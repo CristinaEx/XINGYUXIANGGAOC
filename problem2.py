@@ -87,7 +87,12 @@ def train(save_path = 'problem2_model\\',learning_rate = 1,iterate_time = 1000):
             saver.restore(sess, model_path)            
         for m in range(iterate_time):
             sess.run(train)
-            lo = sess.run([loss])    
+            lo = sess.run([loss]) 
+            if m % 100000 == 0:
+                if not os.path.exists(save_path):
+                    os.makedirs(save_path)
+                save_path = saver.save(sess, model_path)
+                print("Model saved in file: %s" % save_path)   
             if not iterate_time % (m+1) == 0:
                 continue
             print('loss:',end = '')
@@ -98,4 +103,4 @@ def train(save_path = 'problem2_model\\',learning_rate = 1,iterate_time = 1000):
         print("Model saved in file: %s" % save_path)
 
 if __name__ == '__main__':
-    train(save_path = 'problem2_model\\',learning_rate = 0.0001,iterate_time = 100000)
+    train(save_path = 'problem2_model\\',learning_rate = 0.0001,iterate_time = 1000000)

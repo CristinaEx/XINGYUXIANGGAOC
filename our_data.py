@@ -11,7 +11,7 @@ class OurData:
     """
     def __init__(self):
         # ITEM_INDEX | YEAR_INDEX | DATA
-        self.data = [[[0]*ATTR_NUM]*YEAR_NUM]*ITEM_NUM
+        self.data = []
         # ID对应的ITEM_INDEX的message，即前三项数据
         self.data_message_book = dict()
         # [DATA中各个数据所对应的的index,含义]
@@ -29,6 +29,7 @@ class OurData:
         # 规则缺失值或非法值填0，+ = 1,- = -1
         for year_index in range(YEAR_NUM):
             for i in range(1,len(data[data_keys[year_index]])):
+                self.data.append([0]*7)
                 values = data[data_keys[year_index]].loc[i].values
                 item_index = values[0]
                 if not item_index in self.data_message_book.keys():
@@ -64,7 +65,6 @@ class OurData:
 if __name__ == '__main__':
     our_data = OurData()
     # print(numpy.array(our_data.data).shape)
-    # print(our_data.data[0][6])
-    # print(our_data.data_message_book)
-    print(our_data.county_index_book)
-    print(our_data.county_index_book['WOLFE'])
+    # print(our_data.data[0][0])
+    print(our_data.data[0][0])
+
