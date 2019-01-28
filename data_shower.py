@@ -120,10 +120,47 @@ def custom_1(save_path = 'custom_1',years = [0,6]):
             plt.pie(y_data[i][j], labels=label , autopct='%1.1f%%',colors=colors)
             plt.savefig(save_path + '\\' + str(years[j]+2010) + list(states.keys())[i] + ' RACE.png')
             plt.close()
-            
 
+def custom_2(save_path = 'custom_2',years = [0,6]):
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    data = OurData()
+    attrs = list(data.data_index_book.keys())
+    states = dict()
+    states[' Kentucky'] = 0
+    states[' Ohio'] = 1
+    states[' Pennsylvania'] = 2
+    states[' Virginia'] = 3
+    states[' West Virginia'] = 4
+    messages = list(data.data_message_book.values())
+    family_num = [[0]*5]*7
+    for i in range(len(attrs)):
+        if not i in [0,39,40,41]:
+            continue
+        for j in range(YEAR_NUM):
+            if not j in years :
+                continue
+            y = [0]*5
+            x = list(states.keys())
+            plt.title(str(j+2010) + ' ' + data.data_index_book[attrs[i]][1])
+            for m in range(ITEM_NUM):
+                try:
+                    if i == 0:
+                        y[states[messages[m]['GEO.display-label'].split(',')[1]]] = y[states[messages[m]['GEO.display-label'].split(',')[1]]] + data.data[m][j][i]
+                    else:
+                        y[states[messages[m]['GEO.display-label'].split(',')[1]]] = y[states[messages[m]['GEO.display-label'].split(',')[1]]] + data.data[m][j][i] * data.data[m][j][0]
+                except:
+                    continue
+            if i == 0:
+                family_num[j] = y
+            else:
+                for n in range(5):
+                    y[n] = y[n] / family_num[j][n]
+            plt.bar(x, y,color=colors)
+            plt.savefig(save_path + '\\' + str(j+2010) + ' ' + data.data_index_book[attrs[i]][1].replace('\"','') + '.png')
+            plt.close()
         
 if __name__ == '__main__':
     # eachStateEachYearAverageBar('eachStateEachYearAverageBar',[0,6])
-    OHCountyAverageLine('OHCountyAverageLine')
-    # custom_1()
+    # OHCountyAverageLine('OHCountyAverageLine')
+    custom_2()

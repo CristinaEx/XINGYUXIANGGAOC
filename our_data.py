@@ -64,7 +64,5 @@ class OurData:
 
 if __name__ == '__main__':
     our_data = OurData()
-    # print(numpy.array(our_data.data).shape)
-    # print(our_data.data[0][0])
     print(our_data.data_index_book)
 
