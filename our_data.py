@@ -64,5 +64,6 @@ class OurData:
 
 if __name__ == '__main__':
     our_data = OurData()
-    print(our_data.data_index_book)
+    for key in our_data.data_index_book.keys():
+        print(key)
 

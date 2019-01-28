@@ -42,16 +42,16 @@ def train(save_path = 'problem2_model\\',learning_rate = 1,iterate_time = 1000):
     model_path = save_path + 'problem2'
     # 初始化权值
     weights = {
-        'in': tf.get_variable('wi',initializer=tf.random_normal([155,64])),
-        'a': tf.get_variable('wa',initializer=tf.random_normal([64,32])),
-        'b': tf.get_variable('wb',initializer=tf.random_normal([32,16])),
-        'o': tf.get_variable('wo',initializer=tf.random_normal([16,1]))
+        'in': tf.get_variable('wi',initializer=tf.random_normal([155,64]))/100,
+        'a': tf.get_variable('wa',initializer=tf.random_normal([64,32]))/100,
+        'b': tf.get_variable('wb',initializer=tf.random_normal([32,16]))/100,
+        'o': tf.get_variable('wo',initializer=tf.random_normal([16,1]))/100
     }
     biases = {
-        'in': tf.get_variable('bi',initializer=tf.random_normal([64,])),
-        'a': tf.get_variable('ba',initializer=tf.random_normal([32,])),
-        'b': tf.get_variable('bb',initializer=tf.random_normal([16,])),
-        'o': tf.get_variable('bo',initializer=tf.random_normal([1,]))
+        'in': tf.get_variable('bi',initializer=tf.random_normal([64,]))/100,
+        'a': tf.get_variable('ba',initializer=tf.random_normal([32,]))/100,
+        'b': tf.get_variable('bb',initializer=tf.random_normal([16,]))/100,
+        'o': tf.get_variable('bo',initializer=tf.random_normal([1,]))/100
     }
     data_batch,label_batch = getTrainBatch()
     data_batch = tf.cast(data_batch,dtype = tf.float32)
@@ -59,7 +59,7 @@ def train(save_path = 'problem2_model\\',learning_rate = 1,iterate_time = 1000):
     label_batch = tf.cast(label_batch,dtype = tf.float32)
     label_batch = tf.reshape(label_batch,shape = (7*380,))
     data_in = tf.add(tf.matmul(data_batch,weights['in']),biases['in'])
-    data_in = tf.nn.sigmoid(data_in)
+    data_in = tf.nn.relu(data_in)
     data_a = tf.add(tf.matmul(data_in,weights['a']),biases['a'])
     data_a = tf.nn.leaky_relu(data_a)
     data_b = tf.add(tf.matmul(data_a,weights['b']),biases['b'])
@@ -68,8 +68,8 @@ def train(save_path = 'problem2_model\\',learning_rate = 1,iterate_time = 1000):
     output = tf.nn.leaky_relu(output)
     predict = tf.reshape(output,shape = (7*380,))
     loss = predict - label_batch
-    loss = tf.reduce_mean(tf.multiply(loss,loss))
-    # loss = tf.reduce_mean(tf.abs(loss))
+    # loss = tf.reduce_mean(tf.multiply(loss,loss))
+    loss = tf.reduce_mean(tf.abs(loss))
 
     # 建立优化器 随机梯度下降
     optimizer = tf.train.GradientDescentOptimizer(learning_rate = learning_rate)
@@ -87,9 +87,11 @@ def train(save_path = 'problem2_model\\',learning_rate = 1,iterate_time = 1000):
             saver.restore(sess, model_path)            
         for m in range(iterate_time):
             sess.run(train)
-            lo = sess.run([loss]) 
+            lo,pr,la = sess.run([loss,predict,label_batch]) 
             if not iterate_time % (m+1) == 0:
                 continue
+            print(la)
+            print(pr)
             print('loss:',end = '')
             print(lo)
         if not os.path.exists(save_path):
@@ -98,4 +100,4 @@ def train(save_path = 'problem2_model\\',learning_rate = 1,iterate_time = 1000):
         print("Model saved in file: %s" % save_path)
 
 if __name__ == '__main__':
-    train(save_path = 'problem2_model\\',learning_rate = 0.00001,iterate_time = 10000)
+    train(save_path = 'problem2_model\\',learning_rate = 0.01,iterate_time = 10000)
